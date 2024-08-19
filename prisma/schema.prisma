@@ -57,15 +57,18 @@ model User {
   accounts        Account[]
   sessions        Session[]
   projects        Project[]
+  categories      Category[]   @relation("CategoryOwner")
   teamMemberships TeamMember[]
   ownedProjects   Project[]    @relation("ProjectOwner")
 }
 
-// New models for task management
 model Category {
-  id       String    @id @default(cuid())
+id       String    @id @default(cuid())
   name     String
+  ownerId  String
+  owner    User      @relation("CategoryOwner", fields: [ownerId], references: [id])
   projects Project[] @relation("ProjectCategories")
+
 }
 
 model Project {

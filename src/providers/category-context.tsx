@@ -6,6 +6,7 @@ import { Project } from "./project-context";
 export interface Category {
   id: string;
   name: string;
+  ownerId:string;
   projects: Project[];
 }
 
