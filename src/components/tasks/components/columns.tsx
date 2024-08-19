@@ -6,6 +6,7 @@ import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { priorities, statuses } from "../data/data"
+import { formatDate } from "@/utils/formatDate"
 
 // Define types for statuses and priorities
 type StatusType = keyof typeof statuses
@@ -25,14 +26,24 @@ export const columns: ColumnDef<Task>[] = [
         className="translate-y-[2px]"
       />
     ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
+    cell: ({ row }) => {
+      const task = row.original as Task; // Cast the row's original data to your Task type
+      const isCompleted = task.status === "COMPLETED"; // Adjust this condition based on your task status representation
+  
+      return (
+        <Checkbox
+          checked={row.getIsSelected() || isCompleted}
+          onCheckedChange={(value) => {
+            if (!isCompleted) {
+              row.toggleSelected(!!value)
+            }
+          }}
+          aria-label="Select row"
+          className="translate-y-[2px]"
+          disabled={isCompleted}
+        />
+      )
+    },
     enableSorting: false,
     enableHiding: false,
   },
@@ -105,11 +116,10 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Deadline" />
     ),
-    cell: ({ row }) => (
-      <div>
-        {new Date(row.getValue("deadline")).toLocaleDateString()}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const deadline = row.getValue("deadline");
+      return <div>{formatDate(deadline as string)}</div>;
+    },
   },
   {
     id: "actions",

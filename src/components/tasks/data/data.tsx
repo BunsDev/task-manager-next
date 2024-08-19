@@ -23,9 +23,9 @@ export const labels = [
 ]
 
 export const statuses = {
-  TODO: {
-    value: "TODO",
-    label: "To Do",
+  COMPLETED: {
+    value: "COMPLETED",
+    label: "Completed",
     icon: CircleIcon,
   },
   IN_PROGRESS: {
@@ -33,9 +33,9 @@ export const statuses = {
     label: "In Progress",
     icon: StopwatchIcon,
   },
-  DONE: {
-    value: "DONE",
-    label: "Done",
+  CANCELLED: {
+    value: "CANCELLED",
+    label: "Cancelled",
     icon: CheckCircledIcon,
   },
 }
@@ -60,3 +60,6 @@ export const priorities = {
 
 export const getStatusesArray = () => 
   Object.values(statuses).map(({ value, label, icon }) => ({ value, label, icon }))
+
+export const getPrioritiesArray = () => 
+  Object.values(priorities).map(({ value, label, icon }) => ({ value, label, icon }))

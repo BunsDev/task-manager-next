@@ -6,7 +6,7 @@ export const taskSchema = z.object({
   description: z.string().nullable(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH']), // Adjust based on your actual enum values
   deadline: z.date(),
-  status: z.enum(['TODO', 'IN_PROGRESS', 'DONE']), // Adjust based on your actual enum values
+  status: z.enum(['COMPLETED', 'IN_PROGRESS', 'CANCELLED']), // Adjust based on your actual enum values
   projectId: z.string(),
 })
 
