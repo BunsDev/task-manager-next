@@ -1,16 +1,16 @@
-"use server"
+"use server";
 
-import prisma from "@/db/prisma"
+import prisma from "@/db/prisma";
 
-export async function fetchTasks(currentProjectId:string) {
+export async function fetchTasks(currentProjectId: string) {
     try {
         const tasks = await prisma.task.findMany({
-            where:{
-                projectId:currentProjectId
-            }
-        })
-        console.log(tasks)
+            where: {
+                projectId: currentProjectId,
+            },
+        });
+        return tasks;
     } catch (error) {
-        throw new Error("Unable to fetch Task")
+        throw new Error("Unable to fetch Task");
     }
 }

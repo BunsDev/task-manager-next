@@ -1,7 +1,6 @@
 import * as React from "react"
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
 import { Column } from "@tanstack/react-table"
-
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -24,11 +23,11 @@ import { Separator } from "@/components/ui/separator"
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
   title?: string
-  options: {
+  options: Array<{
     label: string
     value: string
     icon?: React.ComponentType<{ className?: string }>
-  }[]
+  }>
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
@@ -38,6 +37,7 @@ export function DataTableFacetedFilter<TData, TValue>({
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set(column?.getFilterValue() as string[])
+  const safeOptions = Array.isArray(options) ? options : []
 
   return (
     <Popover>
@@ -86,7 +86,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
+              {safeOptions.map((option) => {
                 const isSelected = selectedValues.has(option.value)
                 return (
                   <CommandItem

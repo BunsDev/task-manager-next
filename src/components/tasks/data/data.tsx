@@ -4,8 +4,6 @@ import {
   ArrowUpIcon,
   CheckCircledIcon,
   CircleIcon,
-  CrossCircledIcon,
-  QuestionMarkCircledIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons"
 
@@ -24,48 +22,41 @@ export const labels = [
   },
 ]
 
-export const statuses = [
-  {
-    value: "backlog",
-    label: "Backlog",
-    icon: QuestionMarkCircledIcon,
-  },
-  {
-    value: "todo",
-    label: "Todo",
+export const statuses = {
+  TODO: {
+    value: "TODO",
+    label: "To Do",
     icon: CircleIcon,
   },
-  {
-    value: "in progress",
+  IN_PROGRESS: {
+    value: "IN_PROGRESS",
     label: "In Progress",
     icon: StopwatchIcon,
   },
-  {
-    value: "done",
+  DONE: {
+    value: "DONE",
     label: "Done",
     icon: CheckCircledIcon,
   },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
-  },
-]
+}
 
-export const priorities = [
-  {
+export const priorities = {
+  LOW: {
     label: "Low",
-    value: "low",
+    value: "LOW",
     icon: ArrowDownIcon,
   },
-  {
+  MEDIUM: {
     label: "Medium",
-    value: "medium",
+    value: "MEDIUM",
     icon: ArrowRightIcon,
   },
-  {
+  HIGH: {
     label: "High",
-    value: "high",
+    value: "HIGH",
     icon: ArrowUpIcon,
   },
-]
+}
+
+export const getStatusesArray = () => 
+  Object.values(statuses).map(({ value, label, icon }) => ({ value, label, icon }))
