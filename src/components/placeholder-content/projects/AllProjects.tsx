@@ -10,6 +10,7 @@ import { useProject } from "@/providers/project-context";
 import { EditProject } from "./EditProject";
 import { Trash } from "lucide-react";
 import { deleteProject } from "@/actions/delete-project";
+import Link from "next/link";
 
 export default function AllProjects() {
   const { projects, setProjects } = useProject();
@@ -23,7 +24,6 @@ export default function AllProjects() {
           <div className="grid gap-8 min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {projects && projects.map((project) => (
               <Card key={project.id} className="h-fit w-full relative">
-                {/* <ActionDropDown projectId={project.id} /> */}
                 <CardHeader>
                   <CardTitle className="flex gap-2 items-center">
                     <Button variant="outline" className="relative h-8 w-8 rounded-full">
@@ -32,7 +32,9 @@ export default function AllProjects() {
                         <AvatarFallback className="bg-transparent">JD</AvatarFallback>
                       </Avatar>
                     </Button>
-                    {project.name}
+                    <Link href={`/projects/${project.id}`}>
+                      {project.name}
+                    </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

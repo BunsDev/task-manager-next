@@ -86,7 +86,7 @@ model Task {
   description String?
   priority    Priority
   deadline    DateTime
-  // isCompleted Boolean
+  status      TaskStatus
   projectId   String
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
@@ -107,6 +107,13 @@ enum Priority {
   MEDIUM
   HIGH
 }
+
+enum TaskStatus {
+  COMPLETED
+  IN_PROGRESS
+  CANCELLED
+}
+
 
 enum Role {
   VIEWER

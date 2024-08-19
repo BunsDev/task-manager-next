@@ -15,10 +15,9 @@ import TaskPage from "@/components/tasks/page";
 
 
 
-export default function Tasks() {
-    // const params = useParams()
-    // const projectId = params
-    // console.log(projectId.projectTask)
+export default function Tasks({ params }: { params: {
+    projectId: string; slug: string 
+} }) {
     return (
         <ContentLayout title="All Projects">
             <div className="flex items-center justify-between">
@@ -46,7 +45,7 @@ export default function Tasks() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <TaskPage />
+            <TaskPage currentProjectId={params.projectId} />
         </ContentLayout>
     );
 }

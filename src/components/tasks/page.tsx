@@ -1,12 +1,11 @@
 import path from "path"
-import Image from "next/image"
 import { z } from "zod"
 import { promises as fs } from "fs"
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
-import { UserNav } from "./components/user-nav"
-import { taskSchema } from "./data/schema"
 import { Card, CardContent } from "../ui/card"
+import { taskSchema } from "./data/schema"
+import { AddTask } from "../placeholder-content/tasks/AddTask"
 
 
 
@@ -21,9 +20,8 @@ async function getTasks() {
   return z.array(taskSchema).parse(tasks)
 }
 
-export default async function TaskPage() {
+export default async function TaskPage({ currentProjectId }: { currentProjectId: string }) {
   const tasks = await getTasks()
-
   return (
     <Card className=" rounded-lg border-none mt-6">
       <CardContent className="p-6">
@@ -36,7 +34,7 @@ export default async function TaskPage() {
               </p>
             </div>
             <div className="flex items-center space-x-2">
-              <UserNav />
+              <AddTask projectId={currentProjectId}  />
             </div>
           </div>
           <DataTable data={tasks} columns={columns} />
