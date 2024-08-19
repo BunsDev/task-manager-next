@@ -67,8 +67,6 @@ export function AddTask({ projectId }: { projectId: string }) {
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, value)
     })
-    toast.success("Task added successfully asdf")
-
     try {
       await addTask(projectId, formData)
       toast.success("Task added successfully")
