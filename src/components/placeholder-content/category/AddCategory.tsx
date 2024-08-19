@@ -54,19 +54,20 @@ export function AddCategory({ categoreis }: { categoreis: Category[] }) {
 
     const onSubmit = async (data: FormValues) => {
         try {
-            const newCategory = await addCategory(data.name)
+            const newCategory = await addCategory(data.name);
             if (newCategory) {
-                setCategories((prevCategories) => [...prevCategories, newCategory]);
+                setCategories((prevCategories = []) => [...prevCategories, newCategory]);
             }
-            toast.success("Category Added")
-            form.reset()
+            toast.success("Category Added");
+            form.reset();
         } catch (error: any) {
             if (error.message === "Unable to create Category") {
-                toast.error("Unable to create Category")
+                toast.error("Unable to create Category");
             }
         }
-        setOpen(false)
+        setOpen(false);
     };
+    
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
