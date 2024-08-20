@@ -36,13 +36,13 @@ export default async function TaskPage({ currentProjectId }: { currentProjectId:
           <div className="flex items-center justify-between space-y-2">
             <div>
               <h2 className="text-2xl font-bold tracking-tight">{projectName}</h2>
-              <p className="text-muted-foreground flex gap-4 mt-3">
+              <div className="text-muted-foreground flex gap-4 mt-3">
                 Tasks:
                 <div className="flex text-gray-500">
                   <p>{tasksProgress.completed}</p>/
                   <p>{tasksProgress.total}</p>
                 </div>
-              </p>
+              </div>
             </div>
             <div className="flex items-center space-x-2">
               <AddTask projectId={currentProjectId} />

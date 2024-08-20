@@ -17,7 +17,6 @@ import { ProjectProvider } from "@/providers/project-context";
 
 export default async function CategoriesPage() {
   const data= await fetchCategory()
-  console.log(data)
   return (
     <CategoryProvider>
       <ProjectProvider>
