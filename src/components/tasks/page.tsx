@@ -3,12 +3,12 @@ import { Card, CardContent } from "../ui/card"
 import { AddTask } from "../placeholder-content/tasks/AddTask"
 import { fetchTasks } from "@/actions/fetch-tasks"
 import { columns } from "./components/columns"
-import { fetchProjectName } from "@/actions/fetch-projects"
+import { fetchProjectName, getProjectProgress } from "@/actions/fetch-projects"
 
 export default async function TaskPage({ currentProjectId }: { currentProjectId: string }) {
   const tasks = await fetchTasks(currentProjectId)
   const projectName = await fetchProjectName(currentProjectId)
-
+  const tasksProgress = await getProjectProgress(currentProjectId)
 
 
   if (!tasks || tasks.length === 0) {
@@ -20,7 +20,7 @@ export default async function TaskPage({ currentProjectId }: { currentProjectId:
               <h2 className="text-2xl font-bold tracking-tight">{projectName}</h2>
               <p className="text-muted-foreground">No tasks available for this project.</p>
             </div>
-            <div style={{marginTop:"0"}}>
+            <div style={{ marginTop: "0" }}>
               <AddTask projectId={currentProjectId} />
             </div>
           </div>
@@ -35,9 +35,13 @@ export default async function TaskPage({ currentProjectId }: { currentProjectId:
         <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
           <div className="flex items-center justify-between space-y-2">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">Welcome back!</h2>
-              <p className="text-muted-foreground">
-                Here&#39;s a list of your tasks for this month!
+              <h2 className="text-2xl font-bold tracking-tight">{projectName}</h2>
+              <p className="text-muted-foreground flex gap-4 mt-3">
+                Tasks:
+                <div className="flex text-gray-500">
+                  <p>{tasksProgress.completed}</p>/
+                  <p>{tasksProgress.total}</p>
+                </div>
               </p>
             </div>
             <div className="flex items-center space-x-2">
