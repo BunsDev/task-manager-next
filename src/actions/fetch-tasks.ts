@@ -14,3 +14,16 @@ export async function fetchTasks(currentProjectId: string) {
         throw new Error("Unable to fetch Task");
     }
 }
+
+export async function fetchSingleTask(taskId: string) {
+    try {
+        const task = await prisma.task.findFirst({
+            where: {
+                id: taskId,
+            },
+        });
+        return task;
+    } catch (error) {
+        throw new Error("Unable to fetch Task");
+    }
+}

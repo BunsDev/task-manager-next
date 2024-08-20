@@ -27,7 +27,7 @@ export const columns: ColumnDef<Task>[] = [
       />
     ),
     cell: ({ row }) => {
-      const task = row.original as Task; // Cast the row's original data to your Task type
+      const task = row.original as Task; 
       const isCompleted = task.status === "COMPLETED"; // Adjust this condition based on your task status representation
   
       return (

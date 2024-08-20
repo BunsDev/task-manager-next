@@ -23,3 +23,25 @@ export async function fetchProject() {
         throw new Error("Unable to fetch Projects");
     }
 }
+
+export async function fetchProjectName(currentProjectId: string) {
+    try {
+        const project = await prisma.project.findFirst({
+            where: {
+                id: currentProjectId,
+            },
+            select: {
+                name: true,
+            },
+        });
+
+        if (project) {
+            return project.name;
+        } else {
+            throw new Error("Project not found");
+        }
+    } catch (error) {
+        console.error("Error fetching project name:", error);
+        throw error;
+    }
+}
