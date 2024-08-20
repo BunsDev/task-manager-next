@@ -49,9 +49,7 @@ export default async function HomePage() {
               Unlock Your Productivity Today!
             </h1>
             <span className="max-w-[750px] text-center text-lg font-light text-foreground">
-              A stunning and functional retractable sidebar for Next.js using
-              shadcn/ui complete with desktop and mobile responsiveness.
-            </span>
+              An elegant,Open source responsive task management tool built with Next.js and shadcn/ui.            </span>
             <div className="flex w-full items-center justify-center space-x-4 py-4 md:pb-6">
               <Button variant="default" size={"lg"} asChild>
                 <Link href="/dashboard">
@@ -72,7 +70,7 @@ export default async function HomePage() {
           </section>
           <div className="w-full flex justify-center relative">
             <Image
-              src="/demo-light-min.png"
+              src="/demo-light-min.jpg"
               width={1080}
               height={608}
               alt="demo"
@@ -80,7 +78,7 @@ export default async function HomePage() {
               className="border rounded-xl shadow-sm dark:hidden"
             />
             <Image
-              src="/demo-dark-min.png"
+              src="/demo-dark-min.jpg"
               width={1080}
               height={608}
               alt="demo-dark"
@@ -88,14 +86,14 @@ export default async function HomePage() {
               className="border border-zinc-600 rounded-xl shadow-sm hidden dark:block dark:shadow-gray-500/5"
             />
             <Image
-              src="/demo-mobile-light-min.png"
+              src="/demo-mobile-light-min.jpg"
               width={228}
               height={494}
               alt="demo-mobile"
               className="border rounded-xl absolute bottom-0 right-0 hidden lg:block dark:hidden"
             />
             <Image
-              src="/demo-mobile-dark-min.png"
+              src="/demo-mobile-dark-min.jpg"
               width={228}
               height={494}
               alt="demo-mobile"

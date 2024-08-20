@@ -66,7 +66,7 @@ export function EditProject({ projectId }: { projectId: string }) {
                     categories: data.category.map(cat => ({ id: cat.id })),
                 });
                 if (updatedProject) {
-                    setProjects((prevProjects) =>
+                    setProjects((prevProjects = []) =>
                         prevProjects.map((proj) =>
                             proj.id === updatedProject.id ? updatedProject : proj
                         )

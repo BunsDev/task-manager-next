@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ContentLayout } from "~/components/admin-panel/content-layout";
+import { ContentLayout } from "@/components/admin-panel/content-layout";
 // import PlaceholderContent from "~/components/placeholder-content/placeholder-content";
 
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "~/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 export default function UsersPage() {
   return (

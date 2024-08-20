@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
 import { auth } from "@/auth";
+import PlaceholderContent from "@/components/placeholder-content/placehoder-contnet";
 
 
 
@@ -29,7 +30,7 @@ export default async function DashboardPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      {/* <PlaceholderContent /> */}
+      <PlaceholderContent />
     </ContentLayout>
   );
 }
