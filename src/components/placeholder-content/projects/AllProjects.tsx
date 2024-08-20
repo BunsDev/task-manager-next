@@ -3,14 +3,13 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Button } from "../../ui/button";
-import { Progress } from "../../ui/progress";
 import { Badge } from "../../ui/badge";
-import ActionDropDown from "./ActionDropDown";
 import { useProject } from "@/providers/project-context";
 import { EditProject } from "./EditProject";
 import { Trash } from "lucide-react";
 import { deleteProject } from "@/actions/delete-project";
 import Link from "next/link";
+import ProjectProgress from "@/components/ProjectProgress";
 
 export default function AllProjects() {
   const { projects, setProjects } = useProject();
@@ -25,21 +24,20 @@ export default function AllProjects() {
             {projects && projects.map((project) => (
               <Card key={project.id} className="h-fit w-full relative">
                 <CardHeader>
-                  <CardTitle className="flex gap-2 items-center">
+                  <CardTitle className="flex gap-2  items-center">
                     <Button variant="outline" className="relative h-8 w-8 rounded-full">
                       <Avatar className="h-8 w-8">
                         <AvatarImage src="#" alt="Avatar" />
                         <AvatarFallback className="bg-transparent">JD</AvatarFallback>
                       </Avatar>
                     </Button>
-                    <Link href={`/projects/${project.id}`}>
+                    <Link href={`/projects/${project.id}`} className=" overflow-hidden line-clamp-1">
                       {project.name}
                     </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>Progress</p>
-                  <Progress value={33} className="h-2" />
+                  <ProjectProgress key={project.id} projectId={project.id} />
                 </CardContent>
                 <CardFooter className="flex flex-wrap gap-2">
                   {project.categories.map((category) => (

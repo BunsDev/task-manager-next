@@ -2,6 +2,7 @@
 
 import prisma from "@/db/prisma";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export async function fetchProject() {
     const session = await auth();
@@ -43,5 +44,46 @@ export async function fetchProjectName(currentProjectId: string) {
     } catch (error) {
         console.error("Error fetching project name:", error);
         throw error;
+    }
+}
+
+type ProjectProgress = {
+    total: number;
+    completed: number;
+    progress: number;
+};
+
+export async function getProjectProgress(
+    projectId: string
+): Promise<ProjectProgress> {
+    try {
+        const totalTasks = await prisma.task.count({
+            where: {
+                projectId: projectId,
+            },
+        });
+
+        const completedTasks = await prisma.task.count({
+            where: {
+                projectId: projectId,
+                status: "COMPLETED",
+            },
+        });
+
+        const progress =
+            totalTasks > 0
+                ? Math.round((completedTasks / totalTasks) * 100)
+                : 0;
+
+        return {
+            total: totalTasks,
+            completed: completedTasks,
+            progress: progress,
+        };
+    } catch (error) {
+        console.error("Error fetching project progress:", error);
+        throw new Error("Unable to fetch project progress");
+    } finally {
+        revalidatePath("/projects");
     }
 }
