@@ -47,6 +47,7 @@ export function AddCategory({ categoreis }: { categoreis: Category[] }) {
 
     useEffect(() => {
         setCategories(categoreis)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const { isSubmitting } = form.formState;

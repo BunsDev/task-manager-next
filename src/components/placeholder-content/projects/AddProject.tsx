@@ -66,6 +66,7 @@ export function AddProject({ projects }: AddProjectProps) {
 
   useEffect(() => {
     setProjects(projects)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
