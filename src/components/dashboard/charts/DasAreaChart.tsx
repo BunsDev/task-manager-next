@@ -17,33 +17,46 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+import { useQuery } from "@tanstack/react-query"
+import { getProjectData } from "@/actions/chart-data"
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
 
 export function DasAreaChart() {
+
+
+
+  const { data: chartData } = useQuery({
+    queryKey: ["chartProjectData"],
+    queryFn: async () => await getProjectData()
+  })
+
+  // const chartData = [
+  //   { month: "January", desktop: 186, mobile: 80 },
+  //   { month: "February", desktop: 305, mobile: 200 },
+  //   { month: "March", desktop: 237, mobile: 120 },
+  //   { month: "April", desktop: 73, mobile: 190 },
+  //   { month: "May", desktop: 209, mobile: 130 },
+  //   { month: "June", desktop: 214, mobile: 140 },
+  // ]
+
+  const chartConfig = {
+    count: {
+      label: "Project Count",
+      color: "hsl(var(--chart-1))",
+    },
+    // mobile: {
+    //   label: "Mobile",
+    //   color: "hsl(var(--chart-2))",
+    // },
+  } satisfies ChartConfig
+
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart - Stacked</CardTitle>
+        <CardTitle>Project Per-Month</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Showing total Projects for the last 12 months
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -68,20 +81,20 @@ export function DasAreaChart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
             />
-            <Area
+            {/* <Area
               dataKey="mobile"
               type="natural"
               fill="var(--color-mobile)"
               fillOpacity={0.4}
               stroke="var(--color-mobile)"
               stackId="a"
-            />
+            /> */}
             <Area
-              dataKey="desktop"
+              dataKey="count"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="var(--color-count)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-count)"
               stackId="a"
             />
           </AreaChart>
@@ -94,7 +107,7 @@ export function DasAreaChart() {
               Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
+              January - Dec 2024
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -23,6 +23,7 @@ model Account {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([provider, providerAccountId])
 }
 
@@ -39,6 +40,7 @@ model VerificationToken {
   identifier String
   token      String
   expires    DateTime
+
   @@id([identifier, token])
 }
 
@@ -69,6 +71,7 @@ model Project {
   id          String       @id @default(cuid())
   name        String
   description String?
+  createdAt   DateTime     @default(now()) 
   categories  Category[]   @relation("ProjectCategories")
   tasks       Task[]
   teamMembers TeamMember[]
@@ -78,14 +81,14 @@ model Project {
 }
 
 model Task {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   title       String
   description String?
   priority    Priority
   deadline    DateTime
   status      TaskStatus
   projectId   String
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model TeamMember {
@@ -96,6 +99,7 @@ model TeamMember {
   project   Project @relation(fields: [projectId], references: [id])
   role      Role
   createdBy String
+
   @@unique([userId, projectId])
 }
 

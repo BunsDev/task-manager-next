@@ -5,6 +5,7 @@ export interface Project {
   id: string;
   name: string;
   description?: string | null;
+  createdAt : Date,
   categories: { id: string; name: string }[];
   tasks: { id: string; title: string; description: string | null; priority: string; deadline: Date; projectId: string }[];
   teamMembers?: string[];

@@ -63,7 +63,6 @@ export async function fetchTotalTasks() {
     }
 }
 
-
 export async function fetchProjectForChart() {
     const session = await auth();
     if (!session || !session.user || !session.user.id) {
@@ -86,3 +85,36 @@ export async function fetchProjectForChart() {
         throw new Error("Could not fetch total team projects");
     }
 }
+
+export async function getProjectData() {
+    const session = await auth(); 
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("User is not authenticated");
+    }
+  
+    const userId = session.user.id;
+  
+    // Fetch and group projects by month for the current user
+    const projects = await prisma.project.groupBy({
+      by: ["createdAt"],
+      _count: {
+        _all: true, // Count all projects
+      },
+      where: {
+        ownerId: userId, // Filter by the current user's ID
+      },
+      orderBy: {
+        createdAt: "asc", // Order by creation time
+      },
+    });
+  
+    // Transform the data into the format needed for chart
+    const chartData = projects.map((project) => ({
+      month: new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+        new Date(project.createdAt)
+      ),
+      count: project._count._all,
+    }));
+  
+    return chartData;
+  }
