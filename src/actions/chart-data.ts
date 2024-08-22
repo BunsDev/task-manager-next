@@ -63,23 +63,6 @@ export async function fetchTotalTasks() {
     }
 }
 
-// export async function fetchTotalOwnedProjects() {
-//     const session = await auth();
-//     if (!session || !session.user || !session.user.id) {
-//         throw new Error("User is not authenticated");
-//     }
-//     try {
-//         const totalOwnedProjects = await prisma.project.count({
-//             where: {
-//                 ownerId: session.user.id,
-//             },
-//         });
-//         return totalOwnedProjects;
-//     } catch (error) {
-//         console.error("Error fetching total owned projects:", error);
-//         throw new Error("Could not fetch total owned projects");
-//     }
-// }
 
 export async function fetchProjectForChart() {
     const session = await auth();
