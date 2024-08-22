@@ -1,34 +1,4 @@
-// "use server"
-// import prisma from "@/db/prisma";
 
-// export const createTeamMember = async () => {
-//   const user = await prisma.user.findUnique({
-//     where: {
-//       id: "cm02p3jk6000vjm3i4o1viku3",
-//     },
-//   });
-
-//   if (!user) {
-//     throw new Error(`User with ID cm02p3jk6000vjm3i4o1viku3 not found.`);
-//   }
-
-//   const teamMember = await prisma.teamMember.create({
-//     data: {
-//       userId: "cm02p3jk6000vjm3i4o1viku3",
-//       projectId : "cm02d92670000upb7y78xdy6b",
-//       role : "EDITOR",
-//       createdBy: "cm027rv2v00001s5j072u5qv2"
-//     },
-//     include: {
-//       user: true,
-//       project: true,
-//     },
-//   });
-
-//   return teamMember;
-// };
-
-// actions/team-actions.ts
 "use server";
 
 import { auth } from "@/auth";

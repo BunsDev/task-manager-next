@@ -1,10 +1,11 @@
-import Link from "next/link";
-import Image from "next/image";
+
 
 import { Card, CardContent } from "@/components/ui/card";
 import { DasAreaChart } from "../dashboard/charts/DasAreaChart";
 import { DasRadialChart } from "../dashboard/charts/DasRadialChart";
-import CompleteProjects from "../dashboard/charts/CompleteProjects";
+import CompleteTasks from "../dashboard/charts/CompleteProjects";
+import TotalCategory from "../dashboard/charts/TotalCategory";
+import TotalTasks from "../dashboard/charts/TotalTasks";
 
 export default function PlaceholderContent() {
   return (
@@ -20,9 +21,9 @@ export default function PlaceholderContent() {
             </div>
           </div>
           <div className="flex-1 flex gap-2 ">
-            <CompleteProjects />
-            <CompleteProjects />
-            <CompleteProjects />
+            <CompleteTasks />
+             <TotalCategory />
+            <TotalTasks /> 
           </div>
         </div>
       </CardContent>

@@ -3,21 +3,22 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
+import { fetchCompletedTasks } from '@/actions/chart-data'
 
-const CompleteProjects = () => {
+const CompleteTasks =async  () => {
+    const totalCompletedTasks = await fetchCompletedTasks()
     return (
         <Card className='w-full'>
             <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$5,329</CardTitle>
+                <CardDescription>Completed Tasks</CardDescription>
+                <CardTitle className="text-4xl">{totalCompletedTasks}</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="text-xs text-muted-foreground">
-                    +10% from last month
+                +10% from last month
                 </div>
             </CardContent>
             
@@ -25,4 +26,4 @@ const CompleteProjects = () => {
     )
 }
 
-export default CompleteProjects
+export default CompleteTasks
