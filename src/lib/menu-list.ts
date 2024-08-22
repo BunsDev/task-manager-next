@@ -1,11 +1,11 @@
 import {
   Tag,
-  Users,
   Settings,
   Bookmark,
   SquarePen,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  Users
 } from "lucide-react";
 
 type Submenu = {
@@ -82,9 +82,9 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "Settings",
       menus: [
         {
-          href: "/users",
-          label: "Users",
-          active: pathname.includes("/users"),
+          href: "/team",
+          label: "Team",
+          active: pathname.includes("/team"),
           icon: Users,
           submenus: []
         },

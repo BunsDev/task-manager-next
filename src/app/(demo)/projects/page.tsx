@@ -3,15 +3,16 @@ import { fetchProject } from "@/actions/fetch-projects";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import { AddProject } from "@/components/placeholder-content/projects/AddProject";
 import AllProjects from "@/components/placeholder-content/projects/AllProjects";
-import { 
-  Breadcrumb, 
-  BreadcrumbItem, 
-  BreadcrumbLink, 
-  BreadcrumbList, 
-  BreadcrumbPage, 
-  BreadcrumbSeparator 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { ProjectProvider } from "@/providers/project-context";
+import ProjectTabs from "@/components/placeholder-content/projects/ProjectTabs";
 
 
 
@@ -45,7 +46,8 @@ export default async function PostsPage() {
           </Breadcrumb>
           <AddProject projects={projects} />
         </div>
-        <AllProjects />
+        <ProjectTabs />
+        {/* <AllProjects /> */}
       </ContentLayout>
     </ProjectProvider>
   );

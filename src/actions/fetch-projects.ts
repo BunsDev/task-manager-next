@@ -87,3 +87,32 @@ export async function getProjectProgress(
         revalidatePath("/projects");
     }
 }
+
+export async function getProjectsForTeam() {
+    const session = await auth();
+
+    try {
+        if (!session || !session.user?.id) {
+            throw new Error("User not authenticated");
+        }
+
+        const userId = session.user.id;
+
+        const projects = await prisma.project.findMany({
+            where: {
+                ownerId: userId,
+            },
+            select: {
+                id: true,
+                name: true,
+            },
+        });
+
+        return projects;
+    } catch (error) {
+        console.error("Error fetching projects for team:", error);
+        throw error;
+    }
+}
+
+// Function to fetch all users
