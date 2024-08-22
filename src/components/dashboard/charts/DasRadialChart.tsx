@@ -83,7 +83,7 @@ export function DasRadialChart() {
                           y={(viewBox.cy || 0) + 4}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Total Projects
                         </tspan>
                       </text>
                     )

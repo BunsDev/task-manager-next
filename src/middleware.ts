@@ -13,9 +13,15 @@ export default middleware((req) => {
     return NextResponse.redirect(newUrl);
   }
 
+  // If user is authenticated and trying to access /login, redirect to /dashboard or /
+  if (req.auth && pathname === "/login") {
+    const dashboardUrl = new URL("/dashboard", origin);
+    return NextResponse.redirect(dashboardUrl);
+  }
+
   return NextResponse.next();
 });
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}
+};
