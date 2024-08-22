@@ -20,7 +20,6 @@ const TotalCategory = async () => {
                     +1% from last month
                 </div>
             </CardContent>
-
         </Card>
     )
 }

@@ -1,5 +1,4 @@
 "use client"
-
 import { TrendingUp } from "lucide-react"
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
 
@@ -17,27 +16,39 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
+import { fetchProjectForChart } from "@/actions/chart-data"
+import { useQuery } from "@tanstack/react-query"
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+
+
 
 export function DasRadialChart() {
-  const totalVisitors = chartData[0].desktop + chartData[0].mobile
 
+
+  const { data } = useQuery({
+    queryKey: ["fetchProjectforChart"],
+    queryFn: async () => await fetchProjectForChart()
+  })
+
+
+  const chartData = [{ month: "january", your: data?.totalOwnedProjects, team: data?.totalTeamProjects }]
+
+  const chartConfig = {
+    your: {
+      label: "Your Projects",
+      color: "hsl(var(--chart-1))",
+    },
+    team: {
+      label: "Team Projects",
+      color: "hsl(var(--chart-2))",
+    },
+  } satisfies ChartConfig
+  const totalVisitors = (chartData[0]?.your ?? 0) + (chartData[0]?.team ?? 0);
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Stacked</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Total Projects</CardTitle>
+        <CardDescription>January - Dec 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
@@ -81,15 +92,15 @@ export function DasRadialChart() {
               />
             </PolarRadiusAxis>
             <RadialBar
-              dataKey="desktop"
+              dataKey="your"
               stackId="a"
               cornerRadius={5}
-              fill="var(--color-desktop)"
+              fill="var(--color-your)"
               className="stroke-transparent stroke-2"
             />
             <RadialBar
-              dataKey="mobile"
-              fill="var(--color-mobile)"
+              dataKey="team"
+              fill="var(--color-team)"
               stackId="a"
               cornerRadius={5}
               className="stroke-transparent stroke-2"
@@ -99,10 +110,10 @@ export function DasRadialChart() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Trending up by 5.2% this month  <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total Project for the last 12 months
         </div>
       </CardFooter>
     </Card>
