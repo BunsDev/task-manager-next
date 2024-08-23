@@ -1,7 +1,7 @@
-
+"use client"
 import Link from "next/link";
-import { LayoutGrid, LogOut, User } from "lucide-react";
-
+import { useState, useEffect } from "react";
+import { LayoutGrid, LogOut, User, Loader } from "lucide-react"; // Import the Loader icon
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -19,14 +19,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "../ui/dropdown-menu";
-import { auth, signOut } from "@/auth";
+import { signOut, useSession } from "next-auth/react";
 
-export async function UserNav() {
-  const session = await auth()
+export function UserNav() {
+  const { data: sessionData, status } = useSession();
+  const [session, setSession] = useState(sessionData);
 
-  if (!session || !session.user || !session.user.id) {
-    throw new Error("User is not authenticated");
-  }
+  useEffect(() => {
+    setSession(sessionData);
+  }, [sessionData]);
 
   return (
     <DropdownMenu>
@@ -38,15 +39,20 @@ export async function UserNav() {
                 variant="outline"
                 className="relative h-8 w-8 rounded-full"
               >
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src={session.user.image || ""}
-                    alt={session.user.name || ""}
-                  />
-                  <AvatarFallback>
-                    {session.user.name?.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                
+                  <Avatar className="h-8 w-8">
+                    {session?.user?.image ? (
+                      <AvatarImage
+                        src={session.user.image}
+                        alt={session.user.name || ""}
+                      />
+                    ) : (
+                      <AvatarFallback>
+                        {session?.user?.name?.charAt(0).toUpperCase() || "U"}
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
@@ -54,36 +60,43 @@ export async function UserNav() {
         </Tooltip>
       </TooltipProvider>
 
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{session.user.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {session.user.email}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/dashboard" className="flex items-center">
-              <LayoutGrid className="w-4 h-4 mr-3 text-muted-foreground" />
-              Dashboard
-            </Link>
+      {session?.user && (
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {session.user.name || "Guest"}
+              </p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {session.user.email || "No email available"}
+              </p>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="hover:cursor-pointer" asChild>
+              <Link href="/dashboard" className="flex items-center">
+                <LayoutGrid className="w-4 h-4 mr-3 text-muted-foreground" />
+                Dashboard
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="hover:cursor-pointer" asChild>
+              <Link href="/account" className="flex items-center">
+                <User className="w-4 h-4 mr-3 text-muted-foreground" />
+                Account
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="hover:cursor-pointer"
+            onClick={() => signOut()}
+          >
+            <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
+            Sign out
           </DropdownMenuItem>
-          <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/account" className="flex items-center">
-              <User className="w-4 h-4 mr-3 text-muted-foreground" />
-              Account
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" >
-          <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
-          Sign out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   );
 }
