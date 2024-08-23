@@ -27,11 +27,13 @@ type TeamMember = {
   role: Role;
   createdBy: string;
 };
-const AllTeam = ({ team }: { team: TeamMember[]}) => {
+const AllTeam = ({ team }: { team: TeamMember[] }) => {
   return (
     <Card className="rounded-lg border-none relative mt-6">
       <CardContent className="p-6">
-        <div className="flex flex-col gap-4 min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
+        {team.length == 0 ? (
+          <div>No Team Members</div>
+        ) : <div className="flex flex-col gap-4 min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
           {team.map((teamMember) => (
             <Card key={teamMember.id} className="h-fit w-full relative">
               <TeamActionDropDown teamMemberId={teamMember.id} />
@@ -41,7 +43,7 @@ const AllTeam = ({ team }: { team: TeamMember[]}) => {
                     <Avatar>
                       <AvatarImage
                         src={teamMember.user.image || ""}
-                        alt={teamMember.user.name || "" }
+                        alt={teamMember.user.name || ""}
                       />
                       <AvatarFallback>
                         {teamMember.user.name?.charAt(0).toUpperCase()}
@@ -58,6 +60,7 @@ const AllTeam = ({ team }: { team: TeamMember[]}) => {
             </Card>
           ))}
         </div>
+        }
       </CardContent>
     </Card>
   );

@@ -79,4 +79,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - **Environment Variables**: Ensure your `.env.local` file is not committed to version control for security reasons. Use `.gitignore` to exclude it.
 - **Database URL**: You need to get the database URL from your Prisma Accelerate console and set it in your `.env.local` file.
 
-Feel free to adjust the instructions according to your project setup and requirements!
