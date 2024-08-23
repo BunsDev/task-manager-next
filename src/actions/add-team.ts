@@ -1,4 +1,3 @@
-
 "use server";
 
 import { auth } from "@/auth";
@@ -22,6 +21,7 @@ export const createTeamMember = async ({
     if (!session || !session.user || !session.user.id) {
         throw new Error("User is not authenticated");
     }
+
 
     try {
         const user = await prisma.user.findUnique({
@@ -53,6 +53,6 @@ export const createTeamMember = async ({
         throw error;
     } finally {
         await revalidatePath("/team");
+        await revalidatePath("/project");
     }
 };
-

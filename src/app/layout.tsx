@@ -7,6 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { ThemeProvider } from "@/providers/theme-provider";
 import { useTheme } from "next-themes";
 import TopLoader from "@/components/NextTopLoader";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,13 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <TopLoader />
-            {children}
-            <Toaster richColors />
-          </ThemeProvider>
-        </QueryProvider>
+        <SessionProvider>
+          <QueryProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <TopLoader />
+              {children}
+              <Toaster richColors />
+            </ThemeProvider>
+          </QueryProvider>
+        </SessionProvider>
+
       </body>
     </html>
   );

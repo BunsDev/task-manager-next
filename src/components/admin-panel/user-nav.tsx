@@ -1,4 +1,3 @@
-"use client";
 
 import Link from "next/link";
 import { LayoutGrid, LogOut, User } from "lucide-react";
@@ -20,9 +19,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "../ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { auth, signOut } from "@/auth";
 
-export function UserNav() {
+export async function UserNav() {
+  const session = await auth()
+
+  if (!session || !session.user || !session.user.id) {
+    throw new Error("User is not authenticated");
+  }
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -34,8 +39,13 @@ export function UserNav() {
                 className="relative h-8 w-8 rounded-full"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="#" alt="Avatar" />
-                  <AvatarFallback className="bg-transparent">JD</AvatarFallback>
+                  <AvatarImage
+                    src={session.user.image || ""}
+                    alt={session.user.name || ""}
+                  />
+                  <AvatarFallback>
+                    {session.user.name?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -47,9 +57,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">John Doe</p>
+            <p className="text-sm font-medium leading-none">{session.user.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              johndoe@example.com
+              {session.user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -69,7 +79,7 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => { signOut() }}>
+        <DropdownMenuItem className="hover:cursor-pointer" >
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Sign out
         </DropdownMenuItem>
