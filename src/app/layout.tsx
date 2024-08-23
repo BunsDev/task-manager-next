@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "PMA",
   description: "An elegant, Open source responsive task management tool built with Next.js and shadcn/ui.",
+  icons: {
+    icon: "/favicon.png"
+  }
 };
 
 
@@ -26,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body className={inter.className}>
         <SessionProvider>
           <QueryProvider>
