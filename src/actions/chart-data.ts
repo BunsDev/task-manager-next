@@ -87,34 +87,73 @@ export async function fetchProjectForChart() {
 }
 
 export async function getProjectData() {
-    const session = await auth(); 
+    const session = await auth();
     if (!session || !session.user || !session.user.id) {
-      throw new Error("User is not authenticated");
+        throw new Error("User is not authenticated");
     }
-  
+
     const userId = session.user.id;
-  
-    // Fetch and group projects by month for the current user
-    const projects = await prisma.project.groupBy({
-      by: ["createdAt"],
-      _count: {
-        _all: true, // Count all projects
-      },
-      where: {
-        ownerId: userId, // Filter by the current user's ID
-      },
-      orderBy: {
-        createdAt: "asc", // Order by creation time
-      },
+
+    // Fetch all projects for the current user
+    const projects = await prisma.project.findMany({
+        where: {
+            ownerId: userId,
+        },
+        select: {
+            createdAt: true, // Fetch only the creation date
+        },
     });
-  
-    // Transform the data into the format needed for chart
-    const chartData = projects.map((project) => ({
-      month: new Intl.DateTimeFormat("en-US", { month: "long" }).format(
-        new Date(project.createdAt)
-      ),
-      count: project._count._all,
-    }));
-  
+
+    // Initialize all days of the week with a count of 0 and prev3hourcount of 0
+    const daysOfWeek = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+    ];
+    const groupedProjects = daysOfWeek.reduce((acc, day) => {
+        acc[day] = { count: 0, prev3hourcount: 0 };
+        return acc;
+    }, {} as { [key: string]: { count: number; prev3hourcount: number } });
+
+    // Helper function to get the day of the week (e.g., "Monday")
+    const getDayOfWeek = (date: Date) => {
+        return daysOfWeek[date.getDay()];
+    };
+
+    // Current date and time
+    const now = new Date();
+
+    // Update the counts based on the actual project data
+    projects.forEach((project) => {
+        const projectDate = new Date(project.createdAt);
+        const dayOfWeek = getDayOfWeek(projectDate);
+
+        // Update the daily count
+        groupedProjects[dayOfWeek].count += 1;
+
+        // If the project is created today, update the prev3hourcount
+        if (dayOfWeek === getDayOfWeek(now)) {
+            const timeDiff = now.getTime() - projectDate.getTime();
+            const hoursDiff = timeDiff / (1000 * 60 * 60); // Convert time difference to hours
+
+            if (hoursDiff <= 3) {
+                groupedProjects[dayOfWeek].prev3hourcount += 1;
+            }
+        }
+    });
+
+    // Transform the data into the format needed
+    const chartData = Object.entries(groupedProjects).map(
+        ([day, { count, prev3hourcount }]) => ({
+            day,
+            count,
+            prev3hourcount,
+        })
+    );
+
     return chartData;
-  }
+}

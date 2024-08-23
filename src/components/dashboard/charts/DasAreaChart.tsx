@@ -39,24 +39,25 @@ export function DasAreaChart() {
   //   { month: "June", desktop: 214, mobile: 140 },
   // ]
 
+  // console.log(chartData)
   const chartConfig = {
     count: {
-      label: "Project Count",
+      label: "Today Project Count",
       color: "hsl(var(--chart-1))",
     },
-    // mobile: {
-    //   label: "Mobile",
-    //   color: "hsl(var(--chart-2))",
-    // },
+    prev3hourcount: {
+      label: "Prev 3 Hour",
+      color: "hsl(var(--chart-2))",
+    },
   } satisfies ChartConfig
 
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Project Per-Month</CardTitle>
+        <CardTitle>Projects in the Week</CardTitle>
         <CardDescription>
-          Showing total Projects for the last 12 months
+          Showing total Projects for the Week
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -71,7 +72,7 @@ export function DasAreaChart() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="day"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -81,14 +82,14 @@ export function DasAreaChart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
             />
-            {/* <Area
-              dataKey="mobile"
+            <Area
+              dataKey="prev3hourcount"
               type="natural"
-              fill="var(--color-mobile)"
+              fill="var(--color-prev3hourcount)"
               fillOpacity={0.4}
-              stroke="var(--color-mobile)"
+              stroke="var(--color-prev3hourcount)"
               stackId="a"
-            /> */}
+            />
             <Area
               dataKey="count"
               type="natural"
