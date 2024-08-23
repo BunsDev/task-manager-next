@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { LayoutGrid, LogOut, User, Loader } from "lucide-react"; // Import the Loader icon
+import { LayoutGrid, LogOut, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -39,20 +39,20 @@ export function UserNav() {
                 variant="outline"
                 className="relative h-8 w-8 rounded-full"
               >
-                
-                  <Avatar className="h-8 w-8">
-                    {session?.user?.image ? (
-                      <AvatarImage
-                        src={session.user.image}
-                        alt={session.user.name || ""}
-                      />
-                    ) : (
-                      <AvatarFallback>
-                        {session?.user?.name?.charAt(0).toUpperCase() || "U"}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                
+
+                <Avatar className="h-8 w-8">
+                  {session?.user?.image ? (
+                    <AvatarImage
+                      src={session.user.image}
+                      alt={session.user.name || ""}
+                    />
+                  ) : (
+                    <AvatarFallback>
+                      {session?.user?.name?.charAt(0).toUpperCase() || "U"}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>

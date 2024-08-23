@@ -42,7 +42,7 @@ export default function UserProfile() {
         }
     }, [session, form]);
 
-    
+
     async function onSubmit(data: FormValues) {
         if (!session || !session.user || !session.user.email) {
             toast.error("Unauthorized");
@@ -95,7 +95,7 @@ export default function UserProfile() {
 
                             <div className="mb-4">
                                 <FormLabel>Email</FormLabel>
-                                <p className="mt-1 p-2 bg-gray-100 rounded">
+                                <p className="mt-1 p-2 bg-gray-100 dark:text-black rounded">
                                     {session?.user?.email}
                                 </p>
                             </div>

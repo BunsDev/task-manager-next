@@ -13,8 +13,5 @@ export async function updateUserName(userEmail: string, newName: string) {
     } catch (error) {
         console.error("Failed to update user name:", error);
         throw new Error("Failed to update user name");
-    } finally {
-        await revalidatePath("/account");
-        await revalidatePath("/");
-    }
+    } 
 }
