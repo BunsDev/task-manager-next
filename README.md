@@ -21,7 +21,7 @@ Create a `.env.local` file in the root of your project and add the following env
 NEXTAUTH_SECRET="your-nextauth-secret"
 AUTH_GOOGLE_ID="your-google-client-id"
 AUTH_GOOGLE_SECRET="your-google-client-secret"
-NEXTAUTH_URL=http://localhost:3000 // actual url
+NEXTAUTH_URL=http://localhost:3000 // actual ur
 DIRECT_URL="your-database-url" # Get this URL from your Prisma Accelerate console
 DATABASE_URL="your-prisma-accelerate-database-url" # Replace this with the URL from Prisma Accelerate
 ```
