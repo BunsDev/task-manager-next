@@ -2,7 +2,7 @@ import Link from "next/link";
 import { fetchProject } from "@/actions/fetch-projects";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import { AddProject } from "@/components/placeholder-content/projects/AddProject";
-import AllProjects from "@/components/placeholder-content/projects/AllProjects";
+// import AllProjects from "@/components/placeholder-content/projects/AllProjects";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,9 +14,7 @@ import {
 import { ProjectProvider } from "@/providers/project-context";
 import ProjectTabs from "@/components/placeholder-content/projects/ProjectTabs";
 
-
-
-
+export const dynamic = 'force-dynamic';
 
 export default async function PostsPage() {
   const projects = await fetchProject();

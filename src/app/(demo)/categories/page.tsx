@@ -1,5 +1,6 @@
+'use client'
+
 import Link from "next/link";
-import { fetchCategory } from "@/actions/fetch-category";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import { AddCategory } from "@/components/placeholder-content/category/AddCategory";
 import AllCategory from "@/components/placeholder-content/category/AllCategory";
@@ -11,12 +12,45 @@ import {
   BreadcrumbPage, 
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
-import { Category, CategoryProvider } from "@/providers/category-context";
+import { CategoryProvider } from "@/providers/category-context";
 import { ProjectProvider } from "@/providers/project-context";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
+export default function CategoriesPage() {
+  const [categories, setCategories] = useState([]);
+  const { status } = useSession();
+  const router = useRouter();
+  
+  useEffect(() => {
+    // Client-side authentication check
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+    
+    // Client-side data fetching replacement
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/categories');
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+    
+    if (status === "authenticated") {
+      fetchData();
+    }
+  }, [status, router]);
 
-export default async function CategoriesPage() {
-  const data= await fetchCategory()
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   return (
     <CategoryProvider>
       <ProjectProvider>
@@ -41,9 +75,9 @@ export default async function CategoriesPage() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <AddCategory categoreis={data}/>
+            <AddCategory categories={categories}/>
           </div>
-          <AllCategory  />
+          <AllCategory />
         </ContentLayout>
       </ProjectProvider>
     </CategoryProvider>

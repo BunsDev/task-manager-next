@@ -28,7 +28,7 @@ import { addCategory } from "@/actions/add-category";
 
 
 
-export function AddCategory({ categoreis }: { categoreis: Category[] }) {
+export function AddCategory({ categories }: { categories: Category[] }) {
 
     const formSchema = z.object({
         name: z.string().min(1, "Name is required"),
@@ -46,7 +46,7 @@ export function AddCategory({ categoreis }: { categoreis: Category[] }) {
     });
 
     useEffect(() => {
-        setCategories(categoreis)
+        setCategories(categories)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

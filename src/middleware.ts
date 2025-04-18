@@ -1,27 +1,31 @@
-import { NextResponse } from 'next/server';
-import { auth as middleware } from "@/auth";
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
-export default middleware((req) => {
-  const allowedPaths = ["/", "/login", "/api/auth/callback/google"];
-  const { pathname, origin } = req.nextUrl;
-
-  // Check if the request is for a static file
-  const isStaticFile = pathname.startsWith("/_next/") || pathname.startsWith("/static/") || pathname.includes(".");
-
-  if (!req.auth && !allowedPaths.includes(pathname) && !isStaticFile) {
-    const newUrl = new URL("/login", origin);
-    return NextResponse.redirect(newUrl);
+// Move auth check to withAuth wrapper for Next.js compatibility
+export default withAuth(
+  function middleware(req) {
+    const allowedPaths = ["/", "/login", "/api/auth/callback/google"];
+    const { pathname, origin } = req.nextUrl;
+    
+    // If user is authenticated and trying to access /login, redirect to /dashboard
+    if (pathname === "/login") {
+      const dashboardUrl = new URL("/dashboard", origin);
+      return NextResponse.redirect(dashboardUrl);
+    }
+    
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
   }
+);
 
-  // If user is authenticated and trying to access /login, redirect to /dashboard or /
-  if (req.auth && pathname === "/login") {
-    const dashboardUrl = new URL("/dashboard", origin);
-    return NextResponse.redirect(dashboardUrl);
-  }
-
-  return NextResponse.next();
-});
-
+// Configure which routes should check auth
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    // Skip public paths and static assets
+    "/((?!api|_next/static|_next/image|favicon.ico|login|/).*)",
+  ],
 };

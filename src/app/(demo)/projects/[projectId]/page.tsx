@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import TaskPage from "@/components/tasks/page";
 
-
-
-export default function Tasks({ params }: { params: {
-    projectId: string; slug: string 
-} }) {
+// Using a functional component with explicit typing for Next.js 15
+export default function Tasks({ 
+    params 
+}: { 
+    params: { projectId: string }
+    searchParams?: Record<string, string | string[] | undefined>
+}) {
     return (
         <ContentLayout title="All Projects">
             <div className="flex items-center justify-between">

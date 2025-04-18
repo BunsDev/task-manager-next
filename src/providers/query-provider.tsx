@@ -1,4 +1,3 @@
-// src/providers/query-provider.tsx
 "use client";
 
 import { ReactNode } from "react";

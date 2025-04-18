@@ -1,11 +1,10 @@
+'use client'
+
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import Link from "next/link";
 // import PlaceholderContent from "~/components/placeholder-content/placeholder-content";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import UserProfile from "@/components/placeholder-content/account/EditProfile";
-
-
-
 
 export default function AccountPage() {
   return (
